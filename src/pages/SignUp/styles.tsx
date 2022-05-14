@@ -1,19 +1,24 @@
 const styles = {
-	logo: {
+	logoBox: {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		background: '#0c174b',
 		width: '100%',
 		height: '215px'
+	},
+	logo: {
+		fontFamily: 'Koulen',
+		fontWeight: '700',
+		fontSize: '50px',
+		lineHeight: '24px',
+		color: '#790918'
 	},
 	page: {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginTop: '35px',
-		width: '100%'
+		background: '#0c174b'
 	},
 	form: {
 		display: 'flex',
@@ -27,7 +32,22 @@ const styles = {
 		fontWeight: '500',
 		fontSize: '16px',
 		lineHeight: '24px',
-		color: 'rgba(0, 0, 0, 0.8)'
+		color: 'rgba(0, 0, 0, 1)',
+		background: '#C4C4C4',
+		borderRadius: '20px'
+	},
+	loadingButton: {
+		background: '#282D47',
+		height: '40px',
+		borderRadius: '20px',
+		border: '0',
+		color: '#fff',
+		fontFamily: 'Poppins',
+		'&:hover': { opacity: '0.8', background: '#282D47' }
+	},
+	button: {
+		color: '#fff',
+		fontFamily: 'Poppins'
 	}
 }
 

@@ -12,7 +12,12 @@ function signUp(body: UserData) {
 	return axios.post(`${BASE_URL}/sign-up`, body)
 }
 
+function signIn(body: Omit<UserData, 'pictureUrl'>) {
+	return axios.post(`${BASE_URL}/sign-in`, body)
+}
+
 const api = {
+	signIn,
 	signUp
 }
 
