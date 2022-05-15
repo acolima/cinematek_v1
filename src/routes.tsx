@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Main, SignIn, SignUp } from './pages/index'
+import { Main, Movie, SignIn, SignUp } from './pages/index'
 
 function PageRoutes() {
 	return (
@@ -8,6 +8,7 @@ function PageRoutes() {
 				<Route path='/' element={<SignIn />} />
 				<Route path='/sign-up' element={<SignUp />} />
 				<Route path='/movies' element={<Main />} />
+				<Route path='/movies/:id' element={<Movie />} />
 			</Routes>
 		</BrowserRouter>
 	)

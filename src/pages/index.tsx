@@ -1,5 +1,6 @@
 import Main from './Main'
+import Movie from './Movie'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 
-export { Main, SignIn, SignUp }
+export { Main, Movie, SignIn, SignUp }

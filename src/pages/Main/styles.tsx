@@ -9,15 +9,21 @@ const styles = {
 	title: {
 		fontFamily: 'Poppins',
 		fontWeight: '500',
-		fontSize: '16px',
-		lineHeight: '24px',
+		fontSize: '24px',
 		color: '#fff',
 		width: '80%',
-		textAlign: 'left'
+		paddingTop: '20px',
+		textAlign: 'left',
+		'@media (max-width: 600px)': {
+			fontSize: '18px'
+		}
 	},
 	imageList: {
-		width: '90%',
+		width: '80%',
 		height: '100%'
+	},
+	imageListItem: {
+		cursor: 'pointer'
 	}
 }
 

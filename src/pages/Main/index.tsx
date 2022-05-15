@@ -10,6 +10,7 @@ import Header from '../../components/Header'
 import styles from './styles'
 import api from '../../services/api'
 import Loader from '../../components/Loader'
+import { useNavigate } from 'react-router-dom'
 
 export interface MoviesResult {
 	poster_path: string | undefined
@@ -33,6 +34,9 @@ export interface MoviesResult {
 function MainPage() {
 	const [movies, setMovies] = useState<MoviesResult[] | null>(null)
 
+	let navigate = useNavigate()
+	let columns = 1
+
 	useEffect(() => {
 		const promise = api.getTrendingMovies()
 
@@ -40,6 +44,8 @@ function MainPage() {
 			setMovies(response.data.results)
 		})
 	}, [])
+
+	if (window.screen.width > 600) columns = 2
 
 	if (!movies)
 		return (
@@ -54,9 +60,13 @@ function MainPage() {
 			<Header />
 			<Box sx={styles.page}>
 				<Typography sx={styles.title}>Trending</Typography>
-				<ImageList cols={1} sx={styles.imageList}>
+				<ImageList cols={columns} sx={styles.imageList}>
 					{movies.map((movie) => (
-						<ImageListItem key={movie.id}>
+						<ImageListItem
+							key={movie.id}
+							sx={styles.imageListItem}
+							onClick={() => navigate(`/movies/${movie.id}`)}
+						>
 							<img
 								src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
 								alt={movie.title}
