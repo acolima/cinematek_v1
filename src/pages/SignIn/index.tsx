@@ -4,6 +4,7 @@ import {
 	Button,
 	IconButton,
 	InputAdornment,
+	Link,
 	OutlinedInput,
 	Typography
 } from '@mui/material'
@@ -16,6 +17,7 @@ import useAuth from '../../hooks/useAuth'
 
 import styles from '../../pages/SignUp/styles'
 import api from '../../services/api'
+import tmdbLogo from '../../assets/tmdb.svg'
 
 function SignIn() {
 	const [username, setUsername] = useState('')
@@ -58,54 +60,67 @@ function SignIn() {
 	}
 
 	return (
-		<Box sx={styles.page}>
-			<Box sx={styles.logoBox}>
-				<Typography sx={styles.logo}>CINEMATEK</Typography>
+		<Box sx={styles.loginBox}>
+			<Box sx={styles.page}>
+				<Box sx={styles.logoBox}>
+					<Typography sx={styles.logo}>CINEMATEK</Typography>
+				</Box>
+
+				<Box component='form' onSubmit={handleSubmit} sx={styles.form}>
+					<OutlinedInput
+						placeholder='Username'
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+						sx={styles.input}
+						disabled={disabled}
+						required
+					/>
+
+					<PasswordInput
+						password={password}
+						setPassword={setPassword}
+						showPassword={showPassword}
+						setShowPassword={setShowPassword}
+						disabled={disabled}
+					/>
+
+					{passwordLengthError && (
+						<Alert severity='error'>
+							Password must be at least 6 caracters long
+						</Alert>
+					)}
+
+					{requestError && <Alert severity='error'>{requestError}</Alert>}
+
+					<LoadingButton
+						variant='outlined'
+						type='submit'
+						loading={loading}
+						sx={styles.loadingButton}
+					>
+						Log In
+					</LoadingButton>
+
+					<Button
+						sx={styles.button}
+						size='small'
+						onClick={() => navigate('/sign-up')}
+					>
+						First time? Create an account
+					</Button>
+				</Box>
 			</Box>
 
-			<Box component='form' onSubmit={handleSubmit} sx={styles.form}>
-				<OutlinedInput
-					placeholder='Username'
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-					sx={styles.input}
-					disabled={disabled}
-					required
-				/>
-
-				<PasswordInput
-					password={password}
-					setPassword={setPassword}
-					showPassword={showPassword}
-					setShowPassword={setShowPassword}
-					disabled={disabled}
-				/>
-
-				{passwordLengthError && (
-					<Alert severity='error'>
-						Password must be at least 6 caracters long
-					</Alert>
-				)}
-
-				{requestError && <Alert severity='error'>{requestError}</Alert>}
-
-				<LoadingButton
-					variant='outlined'
-					type='submit'
-					loading={loading}
-					sx={styles.loadingButton}
-				>
-					Log In
-				</LoadingButton>
-
-				<Button
-					sx={styles.button}
-					size='small'
-					onClick={() => navigate('/sign-up')}
-				>
-					First time? Create an account
-				</Button>
-			</Box>
+			<Link
+				sx={styles.creditsBox}
+				href='https://www.themoviedb.org/?language=pt-BR'
+				target='_blank'
+			>
+				<Typography sx={styles.credits}>
+					All the data are provided by The Movie Database
+				</Typography>
+				<img src={tmdbLogo} alt='TMBD Logo' width='60' />
+			</Link>
 		</Box>
 	)
 }

@@ -17,8 +17,14 @@ const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		justifyContent: 'center',
-		background: '#0c174b'
+		justifyContent: 'center'
+	},
+	loginBox: {
+		justifyContent: 'space-around',
+		height: '100vh',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center'
 	},
 	form: {
 		display: 'flex',
@@ -48,6 +54,17 @@ const styles = {
 	button: {
 		color: '#fff',
 		fontFamily: 'Poppins'
+	},
+	creditsBox: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		textDecoration: 'none'
+	},
+	credits: {
+		fontFamily: 'Poppins',
+		fontSize: '12px',
+		color: '#fff'
 	}
 }
 
