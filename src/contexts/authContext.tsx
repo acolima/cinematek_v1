@@ -20,7 +20,6 @@ export function AuthProvider({ children }: Props) {
 	const persistedAuth: AuthData = JSON.parse(localStorage.getItem('auth')!)
 	const [auth, setAuth] = useState<AuthData | null>(persistedAuth)
 
-	console.log(auth)
 	function signIn(auth: AuthData) {
 		setAuth(auth)
 		localStorage.setItem('auth', JSON.stringify(auth))

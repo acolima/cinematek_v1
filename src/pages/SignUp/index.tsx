@@ -112,6 +112,7 @@ function SignUp() {
 
 				<OutlinedInput
 					placeholder='URL of profile picture'
+					type='url'
 					sx={styles.input}
 					required
 					value={pictureUrl}
@@ -134,13 +135,21 @@ function SignUp() {
 	)
 }
 
+interface Props {
+	password: string
+	setPassword: React.Dispatch<React.SetStateAction<string>>
+	showPassword: boolean
+	setShowPassword: React.Dispatch<React.SetStateAction<boolean>>
+	disabled: boolean
+}
+
 function PasswordInput({
 	password,
 	setPassword,
 	showPassword,
 	setShowPassword,
 	disabled
-}: any) {
+}: Props) {
 	return (
 		<>
 			<OutlinedInput
