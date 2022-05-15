@@ -4,13 +4,19 @@ const styles = {
 		alignItems: 'center',
 		justifyContent: 'space-around',
 		width: '100%',
-		height: '70px'
+		height: '100px',
+		'@media (max-width: 600px)': {
+			fontSize: '70px'
+		}
 	},
 	logo: {
 		fontFamily: 'Koulen',
 		fontWeight: '700',
-		fontSize: '40px',
-		color: '#790918'
+		fontSize: '60px',
+		color: '#790918',
+		'@media (max-width: 600px)': {
+			fontSize: '40px'
+		}
 	},
 	icons: {
 		color: '#fff',
