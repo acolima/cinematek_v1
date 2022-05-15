@@ -11,6 +11,7 @@ import styles from './styles'
 import api from '../../services/api'
 import Loader from '../../components/Loader'
 import { useNavigate } from 'react-router-dom'
+import Menu from '../../components/Menu'
 
 export interface MoviesResult {
 	poster_path: string | undefined
@@ -33,9 +34,14 @@ export interface MoviesResult {
 
 function MainPage() {
 	const [movies, setMovies] = useState<MoviesResult[] | null>(null)
+	const [showMenu, setShowMenu] = useState(false)
 
 	let navigate = useNavigate()
 	let columns = 1
+
+	function toggleDrawer() {
+		setShowMenu(!showMenu)
+	}
 
 	useEffect(() => {
 		const promise = api.getTrendingMovies()
@@ -50,14 +56,15 @@ function MainPage() {
 	if (!movies)
 		return (
 			<>
-				<Header />
+				<Header toggleDrawer={toggleDrawer} />
 				<Loader />
 			</>
 		)
 
 	return (
 		<>
-			<Header />
+			<Header toggleDrawer={toggleDrawer} />
+			{showMenu && <Menu toggleDrawer={toggleDrawer} showMenu={showMenu} />}
 			<Box sx={styles.page}>
 				<Typography sx={styles.title}>Trending</Typography>
 				<ImageList cols={columns} sx={styles.imageList}>

@@ -4,7 +4,11 @@ const styles = {
 		flexDirection: 'column',
 		alignItems: 'center',
 		gap: '20px',
-		paddingBottom: '15px'
+		paddingBottom: '15px',
+		paddingTop: '100px',
+		'@media (max-width: 600px)': {
+			paddingTop: '70px'
+		}
 	},
 	title: {
 		fontFamily: 'Poppins',

@@ -5,8 +5,11 @@ const styles = {
 		justifyContent: 'space-around',
 		width: '100%',
 		height: '100px',
+		position: 'fixed',
+		zIndex: 1,
+		background: '#0c174b',
 		'@media (max-width: 600px)': {
-			fontSize: '70px'
+			height: '70px'
 		}
 	},
 	logo: {
@@ -20,7 +23,9 @@ const styles = {
 	},
 	icons: {
 		color: '#fff',
-		fontSize: '28px'
+		fontSize: '40px',
+		cursor: 'pointer',
+		'@media (max-width: 600px)': { fontSize: '28px' }
 	}
 }
 
