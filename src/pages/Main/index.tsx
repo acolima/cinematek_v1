@@ -1,17 +1,22 @@
 import {
+	Alert,
 	Box,
+	Button,
 	ImageList,
 	ImageListItem,
 	ImageListItemBar,
 	Typography
 } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
+
 import Header from '../../components/Header'
+import Loader from '../../components/Loader'
+import Menu from '../../components/Menu'
+
 import styles from './styles'
 import api from '../../services/api'
-import Loader from '../../components/Loader'
-import { useNavigate } from 'react-router-dom'
-import Menu from '../../components/Menu'
 
 export interface MoviesResult {
 	poster_path: string | undefined
@@ -35,6 +40,9 @@ export interface MoviesResult {
 function MainPage() {
 	const [movies, setMovies] = useState<MoviesResult[] | null>(null)
 	const [showMenu, setShowMenu] = useState(false)
+	const { auth, signOut } = useAuth()
+
+	const [authError, setAuthError] = useState(false)
 
 	let navigate = useNavigate()
 	let columns = 1
@@ -44,21 +52,53 @@ function MainPage() {
 	}
 
 	useEffect(() => {
-		const promise = api.getTrendingMovies()
-
-		promise.then((response) => {
-			setMovies(response.data.results)
-		})
+		getMovies()
+		// eslint-disable-next-line
 	}, [])
+
+	async function getMovies() {
+		try {
+			await api.signOut(auth?.token)
+
+			try {
+				const { data } = await api.getTrendingMovies()
+				setMovies(data.results)
+			} catch (error: any) {
+				console.log('External API error')
+			}
+		} catch (error: Error | any) {
+			setAuthError(true)
+			signOut()
+		}
+	}
+
+	function handleAuthError() {
+		setAuthError(false)
+		navigate('/')
+	}
 
 	if (window.screen.width > 600) columns = 2
 
 	if (!movies)
 		return (
-			<>
+			<Box sx={styles.flex}>
 				<Header toggleDrawer={toggleDrawer} />
-				<Loader />
-			</>
+				{authError ? (
+					<Alert
+						severity='error'
+						sx={styles.alert}
+						action={
+							<Button color='error' size='small' onClick={handleAuthError}>
+								OK
+							</Button>
+						}
+					>
+						Try to login again
+					</Alert>
+				) : (
+					<Loader />
+				)}
+			</Box>
 		)
 
 	return (

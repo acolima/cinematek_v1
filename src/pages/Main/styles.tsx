@@ -28,6 +28,15 @@ const styles = {
 	},
 	imageListItem: {
 		cursor: 'pointer'
+	},
+	flex: {
+		display: 'flex',
+		flexDirection: 'column'
+	},
+	alert: {
+		marginTop: '200px',
+		width: '60%',
+		alignSelf: 'center'
 	}
 }
 

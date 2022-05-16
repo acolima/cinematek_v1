@@ -3,6 +3,7 @@ import { createContext, useState } from 'react'
 interface IAuthContext {
 	auth: AuthData | null
 	signIn: (auth: AuthData) => void
+	signOut: () => void
 }
 export const AuthContext = createContext<IAuthContext | null>(null)
 
@@ -24,8 +25,13 @@ export function AuthProvider({ children }: Props) {
 		setAuth(auth)
 		localStorage.setItem('auth', JSON.stringify(auth))
 	}
+
+	function signOut() {
+		localStorage.removeItem('auth')
+	}
+
 	return (
-		<AuthContext.Provider value={{ auth, signIn }}>
+		<AuthContext.Provider value={{ auth, signIn, signOut }}>
 			{children}
 		</AuthContext.Provider>
 	)

@@ -14,9 +14,11 @@ import { BookmarkAdd, Favorite } from '@mui/icons-material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import LogoutIcon from '@mui/icons-material/Logout'
 import ThumbDownIcon from '@mui/icons-material/ThumbDown'
-import useAuth from '../../hooks/useAuth'
+
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 import styles from './styles'
+import api from '../../services/api'
 
 interface Props {
 	toggleDrawer: () => void
@@ -31,8 +33,15 @@ const options = [
 ]
 
 function Menu({ toggleDrawer, showMenu }: Props) {
-	const { auth } = useAuth()
+	const { auth, signOut } = useAuth()
 	let navigate = useNavigate()
+
+	function handleLogout() {
+		api.signOut(auth!.token).then(() => {
+			signOut()
+			navigate('/')
+		})
+	}
 
 	return (
 		<div>
@@ -74,7 +83,7 @@ function Menu({ toggleDrawer, showMenu }: Props) {
 					<Divider />
 
 					<List>
-						<ListItem disablePadding>
+						<ListItem disablePadding onClick={handleLogout}>
 							<ListItemButton>
 								<ListItemIcon>
 									<LogoutIcon />

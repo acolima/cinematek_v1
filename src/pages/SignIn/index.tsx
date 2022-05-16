@@ -11,7 +11,7 @@ import {
 import { LoadingButton } from '@mui/lab'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 
@@ -33,6 +33,10 @@ function SignIn() {
 	const { signIn } = useAuth()
 
 	let navigate = useNavigate()
+
+	useEffect(() => {
+		if (localStorage.getItem('auth')) navigate('/movies')
+	}, [navigate])
 
 	async function handleSubmit(e: React.FormEvent) {
 		e.preventDefault()

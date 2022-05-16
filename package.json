@@ -14,7 +14,8 @@
 		"react-dom": "^17.0.2",
 		"react-loader-spinner": "^6.0.0-0",
 		"react-router-dom": "^6.3.0",
-		"react-scripts": "^4.0.3"
+		"react-scripts": "^4.0.3",
+		"sweetalert2": "^11.4.14"
 	},
 	"devDependencies": {
 		"@types/react-dom": "^18.0.4",
