@@ -37,7 +37,7 @@ function Menu({ toggleDrawer, showMenu }: Props) {
 	let navigate = useNavigate()
 
 	function handleLogout() {
-		api.signOut(auth!.token).then(() => {
+		api.validateToken(auth!.token).then(() => {
 			signOut()
 			navigate('/')
 		})

@@ -140,6 +140,7 @@ a {
 .root {
 	background-color: #0c174b;
 	font-family: 'Poppins', sans-serif;
+	color: #fff;
 	min-height: 100vh;
-	width: 100vw;
+	min-width: 100vw;
 }

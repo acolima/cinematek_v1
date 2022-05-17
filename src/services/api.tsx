@@ -21,7 +21,7 @@ function signIn(body: Omit<UserData, 'pictureUrl'>) {
 	return axios.post(`${BASE_URL}/sign-in`, body)
 }
 
-function signOut(token: string | undefined) {
+function validateToken(token: string | undefined) {
 	const config = createConfig(token)
 
 	return axios.post(`${BASE_URL}/sign-out`, {}, config)
@@ -33,11 +33,18 @@ function getTrendingMovies() {
 	)
 }
 
+function getMovie(movieId: number) {
+	return axios.get(
+		`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`
+	)
+}
+
 const api = {
+	getMovie,
 	getTrendingMovies,
 	signIn,
-	signOut,
-	signUp
+	signUp,
+	validateToken
 }
 
 export default api

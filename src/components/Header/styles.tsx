@@ -22,7 +22,6 @@ const styles = {
 		}
 	},
 	icons: {
-		color: '#fff',
 		fontSize: '40px',
 		cursor: 'pointer',
 		'@media (max-width: 600px)': { fontSize: '28px' }

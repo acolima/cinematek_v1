@@ -14,7 +14,6 @@ const styles = {
 		fontFamily: 'Poppins',
 		fontWeight: '500',
 		fontSize: '24px',
-		color: '#fff',
 		width: '80%',
 		paddingTop: '20px',
 		textAlign: 'left',
