@@ -39,7 +39,14 @@ function getMovie(movieId: number) {
 	)
 }
 
+function findMoviesByName(name: string) {
+	return axios.get(
+		`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${name}&include_adult=false`
+	)
+}
+
 const api = {
+	findMoviesByName,
 	getMovie,
 	getTrendingMovies,
 	signIn,

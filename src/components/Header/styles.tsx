@@ -1,5 +1,5 @@
 const styles = {
-	logoBox: {
+	header: {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'space-around',
@@ -22,9 +22,19 @@ const styles = {
 		}
 	},
 	icons: {
-		fontSize: '40px',
-		cursor: 'pointer',
-		'@media (max-width: 600px)': { fontSize: '28px' }
+		fontSize: '2em',
+		cursor: 'pointer'
+	},
+	searchBar: {
+		width: '70%',
+		height: '40px',
+		fontFamily: 'Poppins',
+		fontWeight: '500',
+		fontSize: '14px',
+		lineHeight: '24px',
+		color: 'rgba(0, 0, 0, 1)',
+		background: '#C4C4C4',
+		borderRadius: '20px'
 	}
 }
 

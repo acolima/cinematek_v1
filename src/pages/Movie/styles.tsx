@@ -10,6 +10,10 @@ const styles = {
 		width: '100vw',
 		height: '200px'
 	},
+	noBackdrop: {
+		width: '100vw',
+		height: '200px'
+	},
 	poster: {
 		position: 'absolute',
 		zIndex: '1',

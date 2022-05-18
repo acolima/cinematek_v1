@@ -15,7 +15,6 @@ const styles = {
 		fontWeight: '500',
 		fontSize: '24px',
 		width: '80%',
-		paddingTop: '20px',
 		textAlign: 'left',
 		'@media (max-width: 600px)': {
 			fontSize: '18px'

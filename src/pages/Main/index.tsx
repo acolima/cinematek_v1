@@ -17,6 +17,7 @@ import Menu from '../../components/Menu'
 
 import styles from './styles'
 import api from '../../services/api'
+import useMenu from '../../hooks/useMenu'
 
 export interface MoviesResult {
 	poster_path: string | undefined
@@ -29,17 +30,13 @@ export interface MoviesResult {
 
 function MainPage() {
 	const [movies, setMovies] = useState<MoviesResult[] | null>(null)
-	const [showMenu, setShowMenu] = useState(false)
 	const { auth, signOut } = useAuth()
+	const { showMenu } = useMenu()
 
 	const [authError, setAuthError] = useState(false)
 
 	let navigate = useNavigate()
 	let columns = 1
-
-	function toggleDrawer() {
-		setShowMenu(!showMenu)
-	}
 
 	useEffect(() => {
 		getMovies()
@@ -72,7 +69,7 @@ function MainPage() {
 	if (!movies)
 		return (
 			<Box sx={styles.flex}>
-				<Header toggleDrawer={toggleDrawer} />
+				<Header page='main' />
 				{authError ? (
 					<Alert
 						severity='error'
@@ -93,8 +90,8 @@ function MainPage() {
 
 	return (
 		<>
-			<Header toggleDrawer={toggleDrawer} />
-			{showMenu && <Menu toggleDrawer={toggleDrawer} showMenu={showMenu} />}
+			<Header page='main' />
+			{showMenu && <Menu />}
 			<Box sx={styles.page}>
 				<Typography sx={styles.title}>Trending</Typography>
 				<ImageList cols={columns} sx={styles.imageList}>

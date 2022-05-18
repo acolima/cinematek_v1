@@ -16,13 +16,9 @@ import LogoutIcon from '@mui/icons-material/Logout'
 
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
+import useMenu from '../../hooks/useMenu'
 import styles from './styles'
 import api from '../../services/api'
-
-interface Props {
-	toggleDrawer: () => void
-	showMenu: boolean
-}
 
 const options = [
 	{ icon: <Favorite />, name: 'Favorites', path: 'favorites' },
@@ -30,8 +26,9 @@ const options = [
 	{ icon: <BookmarkAdd />, name: 'Watchlist', path: 'watchlist' }
 ]
 
-function Menu({ toggleDrawer, showMenu }: Props) {
+function MenuBar() {
 	const { auth, signOut } = useAuth()
+	const { toggleDrawer, showMenu } = useMenu()
 	let navigate = useNavigate()
 
 	function handleLogout() {
@@ -96,4 +93,4 @@ function Menu({ toggleDrawer, showMenu }: Props) {
 	)
 }
 
-export default Menu
+export default MenuBar

@@ -15,7 +15,7 @@ interface Genre {
 	name: string
 }
 
-interface MovieResult {
+export interface MovieResult {
 	id: number
 	title: string
 	overview: string | null
@@ -31,7 +31,6 @@ function Movie() {
 	const [movie, setMovie] = useState<MovieResult | null>(null)
 
 	let navigate = useNavigate()
-	console.log(movie)
 
 	useEffect(() => {
 		getMovie()
@@ -57,11 +56,15 @@ function Movie() {
 
 	return (
 		<Box sx={styles.page}>
-			<img
-				src={`https://image.tmdb.org/t/p/w400/${movie?.backdrop_path}`}
-				alt={movie.title}
-				style={styles.backdrop}
-			/>
+			{movie.backdrop_path ? (
+				<img
+					src={`https://image.tmdb.org/t/p/w400/${movie?.backdrop_path}`}
+					alt={movie.title}
+					style={styles.backdrop}
+				/>
+			) : (
+				<Box sx={styles.noBackdrop}></Box>
+			)}
 			<Box sx={styles.poster}>
 				<img
 					src={`https://image.tmdb.org/t/p/w400/${movie?.poster_path}`}
