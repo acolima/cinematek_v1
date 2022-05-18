@@ -13,7 +13,6 @@ import {
 import { BookmarkAdd, Favorite } from '@mui/icons-material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import LogoutIcon from '@mui/icons-material/Logout'
-import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
@@ -28,8 +27,7 @@ interface Props {
 const options = [
 	{ icon: <Favorite />, name: 'Favorites', path: 'favorites' },
 	{ icon: <CheckCircleIcon />, name: 'Watched', path: 'watched' },
-	{ icon: <BookmarkAdd />, name: 'Watchlist', path: 'watchlist' },
-	{ icon: <ThumbDownIcon />, name: 'Nope', path: 'abandoned' }
+	{ icon: <BookmarkAdd />, name: 'Watchlist', path: 'watchlist' }
 ]
 
 function Menu({ toggleDrawer, showMenu }: Props) {

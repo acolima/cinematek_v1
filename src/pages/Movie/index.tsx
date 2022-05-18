@@ -1,16 +1,14 @@
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
-import { Box, Chip, List, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Chip, Typography } from '@mui/material'
 
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 
 import api from '../../services/api'
 import styles from './styles'
+import MovieActions from '../../components/Actions/WatchActions'
+import FavoriteAction from '../../components/Actions/Favorite'
 
 interface Genre {
 	id: number
@@ -18,21 +16,13 @@ interface Genre {
 }
 
 interface MovieResult {
-	backdrop_path: string | undefined
-	genres: Genre[]
 	id: number
-	imdb_id: string | null
-	original_title: string
-	overview: string | null
-	popularity: number
-	poster_path: string | undefined
-	release_date: string
-	runtime: number | null
-	status: string
-	tagline: string | null
 	title: string
-	vote_average: number
-	vote_count: number
+	overview: string | null
+	poster_path: string | undefined
+	backdrop_path: string | undefined
+	runtime: number | null
+	genres: Genre[]
 }
 
 function Movie() {
@@ -40,6 +30,7 @@ function Movie() {
 	const { auth } = useAuth()
 	const [movie, setMovie] = useState<MovieResult | null>(null)
 
+	let navigate = useNavigate()
 	console.log(movie)
 
 	useEffect(() => {
@@ -79,20 +70,18 @@ function Movie() {
 				/>
 			</Box>
 
-			<Box sx={styles.backButton}>
-				<FavoriteBorderOutlinedIcon fontSize='large' />
-			</Box>
+			<Button sx={styles.backButton} onClick={() => navigate(-1)}>
+				<ArrowBackOutlinedIcon sx={styles.icons} />
+			</Button>
 
-			<Box sx={styles.favoriteButton}>
-				<ArrowBackOutlinedIcon fontSize='large' />
-			</Box>
+			<FavoriteAction />
 
 			<Box sx={styles.movieInfoBox}>
 				<Typography sx={styles.movieTitle}>{movie.title}</Typography>
 
 				<Box sx={styles.movieGenres}>
 					{movie.genres.map((genre) => (
-						<Chip label={genre.name} color='primary' />
+						<Chip label={genre.name} color='primary' key={genre.id} />
 					))}
 				</Box>
 
@@ -102,19 +91,7 @@ function Movie() {
 					Duration: {movie.runtime} minutes
 				</Typography>
 
-				<List sx={styles.buttonsList}>
-					<Tooltip title='Watched'>
-						<CheckCircleOutlineIcon fontSize='large' />
-					</Tooltip>
-
-					<Tooltip title='Watchlist'>
-						<BookmarkAddOutlinedIcon fontSize='large' />
-					</Tooltip>
-
-					<Tooltip title='Nope'>
-						<ThumbDownAltOutlinedIcon fontSize='large' />
-					</Tooltip>
-				</List>
+				<MovieActions />
 			</Box>
 		</Box>
 	)

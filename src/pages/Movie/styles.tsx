@@ -19,12 +19,17 @@ const styles = {
 	backButton: {
 		position: 'absolute',
 		top: '10px',
-		right: '10px'
+		left: '10px'
 	},
 	favoriteButton: {
 		position: 'absolute',
 		top: '10px',
-		left: '10px'
+		right: '10px'
+	},
+	icons: {
+		fontSize: '2.5em',
+		cursor: 'pointer',
+		color: '#fff'
 	},
 	movieInfoBox: {
 		marginTop: '70px',
@@ -42,7 +47,8 @@ const styles = {
 	},
 	movieGenres: {
 		display: 'flex',
-		justifyContent: 'space-evenly'
+		justifyContent: 'space-evenly',
+		flexWrap: 'wrap'
 	},
 	movieOverview: {
 		width: '85%',
@@ -57,10 +63,6 @@ const styles = {
 		fontFamily: 'Poppins',
 		fontSize: '12px',
 		margin: '0 auto'
-	},
-	buttonsList: {
-		display: 'flex',
-		justifyContent: 'space-evenly'
 	}
 }
 
