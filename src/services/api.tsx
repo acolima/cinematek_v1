@@ -13,8 +13,14 @@ interface UserData {
 	pictureUrl: string
 }
 
+interface MovieData {
+	id: number
+	title: string | undefined
+	posterPath: string | undefined
+}
+
 function signUp(body: UserData) {
-	return axios.post(`${BASE_URL}/sign-up`, body)
+	return axios.post(`${BASE_URL}/register`, body)
 }
 
 function signIn(body: Omit<UserData, 'pictureUrl'>) {
@@ -24,7 +30,7 @@ function signIn(body: Omit<UserData, 'pictureUrl'>) {
 function validateToken(token: string | undefined) {
 	const config = createConfig(token)
 
-	return axios.post(`${BASE_URL}/sign-out`, {}, config)
+	return axios.post(`${BASE_URL}/token`, {}, config)
 }
 
 function getTrendingMovies() {
@@ -45,12 +51,35 @@ function findMoviesByName(name: string) {
 	)
 }
 
+function findUserMovie(token: string | undefined, id: number) {
+	const config = createConfig(token)
+
+	return axios.get(`${BASE_URL}/users/movies/${id}`, config)
+}
+
+function updateAction(
+	token: string | undefined,
+	action: string,
+	status: boolean,
+	movieData: MovieData
+) {
+	const config = createConfig(token)
+
+	return axios.post(
+		`${BASE_URL}/movies/${movieData.id}/${action}/${status}`,
+		{ title: movieData.title, posterPath: movieData.posterPath },
+		config
+	)
+}
+
 const api = {
 	findMoviesByName,
+	findUserMovie,
 	getMovie,
 	getTrendingMovies,
 	signIn,
 	signUp,
+	updateAction,
 	validateToken
 }
 

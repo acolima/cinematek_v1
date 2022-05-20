@@ -4,18 +4,42 @@ import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import { useEffect, useState } from 'react'
+import useAuth from '../../../hooks/useAuth'
 
-function MovieActions() {
-	const [watched, setWatched] = useState(false)
-	const [watchlist, setWatchlist] = useState(false)
+import { MovieResult, UserMovie } from '../../../pages/Movie'
+import api from '../../../services/api'
+import styles from '../styles'
+
+interface Props {
+	userMovie: UserMovie | null
+	movie: MovieResult
+}
+
+function MovieActions({ userMovie, movie }: Props) {
+	const [watched, setWatched] = useState(userMovie?.watched)
+	const [watchlist, setWatchlist] = useState(userMovie?.watchlist)
+	const { auth } = useAuth()
 
 	useEffect(() => {}, [watched, watchlist])
 
-	function handleWatchedClick() {
+	const movieData = {
+		id: movie.id,
+		title: movie!.title,
+		posterPath: movie!.poster_path
+	}
+
+	async function handleWatchedClick() {
+		if (watchlist) {
+			await api.updateAction(auth?.token, 'watchlist', false, movieData)
+			setWatchlist(false)
+		}
+
+		await api.updateAction(auth?.token, 'watched', !watched, movieData)
 		setWatched(!watched)
 	}
 
-	function handleWatchlistClick() {
+	async function handleWatchlistClick() {
+		await api.updateAction(auth?.token, 'watchlist', !watchlist, movieData)
 		setWatchlist(!watchlist)
 	}
 
@@ -32,11 +56,11 @@ function MovieActions() {
 			)}
 
 			{watchlist ? (
-				<Button onClick={handleWatchlistClick}>
+				<Button disabled={watched} onClick={handleWatchlistClick}>
 					<BookmarkAddIcon sx={styles.icons} />
 				</Button>
 			) : (
-				<Button onClick={handleWatchlistClick}>
+				<Button disabled={watched} onClick={handleWatchlistClick}>
 					<BookmarkAddOutlinedIcon sx={styles.icons} />
 				</Button>
 			)}
@@ -45,8 +69,3 @@ function MovieActions() {
 }
 
 export default MovieActions
-
-const styles = {
-	list: { display: 'flex', justifyContent: 'space-evenly' },
-	icons: { fontSize: '2.5em', cursor: 'pointer', color: '#fff' }
-}

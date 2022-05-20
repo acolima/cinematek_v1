@@ -1,14 +1,31 @@
 import { Button } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import { useEffect, useState } from 'react'
 
-function FavoriteAction() {
-	const [favorite, setFavorite] = useState(false)
+import { useEffect, useState } from 'react'
+import useAuth from '../../../hooks/useAuth'
+
+import { MovieResult, UserMovie } from '../../../pages/Movie'
+import api from '../../../services/api'
+import styles from '../styles'
+
+interface Props {
+	userMovie: UserMovie | null
+	movie: MovieResult
+}
+
+function FavoriteAction({ userMovie, movie }: Props) {
+	const [favorite, setFavorite] = useState(userMovie?.favorite)
+	const { auth } = useAuth()
 
 	useEffect(() => {}, [favorite])
 
-	function handleFavoriteClick() {
+	async function handleFavoriteClick() {
+		await api.updateAction(auth?.token, 'favorite', !favorite, {
+			id: movie.id,
+			title: movie!.title,
+			posterPath: movie!.poster_path
+		})
 		setFavorite(!favorite)
 	}
 	return (
@@ -27,16 +44,3 @@ function FavoriteAction() {
 }
 
 export default FavoriteAction
-
-const styles = {
-	favoriteButton: {
-		position: 'absolute',
-		top: '10px',
-		right: '10px'
-	},
-	icons: {
-		fontSize: '2.5em',
-		cursor: 'pointer',
-		color: '#fff'
-	}
-}

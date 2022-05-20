@@ -25,10 +25,19 @@ export interface MovieResult {
 	genres: Genre[]
 }
 
+export interface UserMovie {
+	movieId: number
+	userId: number
+	favorite: boolean
+	watched: boolean
+	watchlist: boolean
+}
+
 function Movie() {
 	const { id } = useParams()
 	const { auth } = useAuth()
 	const [movie, setMovie] = useState<MovieResult | null>(null)
+	const [userMovie, setUserMovie] = useState<UserMovie | null>(null)
 
 	let navigate = useNavigate()
 
@@ -39,7 +48,8 @@ function Movie() {
 
 	async function getMovie() {
 		try {
-			await api.validateToken(auth?.token)
+			const { data } = await api.findUserMovie(auth?.token, Number(id))
+			setUserMovie(data[0])
 
 			try {
 				const { data } = await api.getMovie(Number(id))
@@ -77,7 +87,7 @@ function Movie() {
 				<ArrowBackOutlinedIcon sx={styles.icons} />
 			</Button>
 
-			<FavoriteAction />
+			<FavoriteAction movie={movie} userMovie={userMovie} />
 
 			<Box sx={styles.movieInfoBox}>
 				<Typography sx={styles.movieTitle}>{movie.title}</Typography>
@@ -94,7 +104,7 @@ function Movie() {
 					Duration: {movie.runtime} minutes
 				</Typography>
 
-				<MovieActions />
+				<MovieActions movie={movie} userMovie={userMovie} />
 			</Box>
 		</Box>
 	)
