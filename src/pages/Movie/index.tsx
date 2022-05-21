@@ -49,7 +49,7 @@ function Movie() {
 	async function getMovie() {
 		try {
 			const { data } = await api.findUserMovie(auth?.token, Number(id))
-			setUserMovie(data[0])
+			setUserMovie(data)
 
 			try {
 				const { data } = await api.getMovie(Number(id))

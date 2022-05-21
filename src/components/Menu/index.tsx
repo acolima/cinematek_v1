@@ -13,6 +13,7 @@ import {
 import { BookmarkAdd, Favorite } from '@mui/icons-material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import LogoutIcon from '@mui/icons-material/Logout'
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
 
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
@@ -21,7 +22,7 @@ import styles from './styles'
 import api from '../../services/api'
 
 const options = [
-	{ icon: <Favorite />, name: 'Favorites', path: 'favorites' },
+	{ icon: <Favorite />, name: 'Favorite', path: 'favorite' },
 	{ icon: <CheckCircleIcon />, name: 'Watched', path: 'watched' },
 	{ icon: <BookmarkAdd />, name: 'Watchlist', path: 'watchlist' }
 ]
@@ -55,6 +56,19 @@ function MenuBar() {
 								sx={styles.avatar}
 							/>
 							<Typography sx={styles.username}>{auth?.username}</Typography>
+						</ListItem>
+					</List>
+
+					<Divider />
+
+					<List>
+						<ListItem disablePadding onClick={() => navigate('/movies')}>
+							<ListItemButton>
+								<ListItemIcon>
+									<HomeRoundedIcon />
+								</ListItemIcon>
+								<ListItemText primary='Movies' />
+							</ListItemButton>
 						</ListItem>
 					</List>
 

@@ -47,10 +47,19 @@ function Header({ page, movieName, setMovieName, handleSearch }: Props) {
 		)
 	}
 
+	if (page === 'main')
+		return (
+			<Box sx={styles.header}>
+				<Search sx={styles.icons} onClick={() => navigate('/search')} />
+				<Typography sx={styles.logo}>CINEMATEK</Typography>
+				<Menu sx={styles.icons} onClick={toggleDrawer} />
+			</Box>
+		)
+
 	return (
 		<Box sx={styles.header}>
-			<Search sx={styles.icons} onClick={() => navigate('/search')} />
-			<Typography sx={styles.logo}>CINEMATEK</Typography>
+			<ArrowBackOutlinedIcon sx={styles.icons} onClick={() => navigate(-1)} />
+			<Typography sx={styles.logo}>{page}</Typography>
 			<Menu sx={styles.icons} onClick={toggleDrawer} />
 		</Box>
 	)
