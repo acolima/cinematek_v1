@@ -15,7 +15,8 @@ const styles = {
 		alignItems: 'center',
 		backgroundColor: '#282D47',
 		marginBottom: '25px',
-		borderRadius: '20px'
+		borderRadius: '20px',
+		cursor: 'pointer'
 	},
 	title: {
 		fontFamily: 'Poppins',

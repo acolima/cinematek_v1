@@ -58,7 +58,10 @@ function Header({ page, movieName, setMovieName, handleSearch }: Props) {
 
 	return (
 		<Box sx={styles.header}>
-			<ArrowBackOutlinedIcon sx={styles.icons} onClick={() => navigate(-1)} />
+			<ArrowBackOutlinedIcon
+				sx={styles.icons}
+				onClick={() => navigate('/movies')}
+			/>
 			<Typography sx={styles.logo}>{page}</Typography>
 			<Menu sx={styles.icons} onClick={toggleDrawer} />
 		</Box>

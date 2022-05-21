@@ -5,7 +5,7 @@ import MenuBar from '../../components/Menu'
 import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import useMenu from '../../hooks/useMenu'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import api from '../../services/api'
 import styles from './styles'
@@ -63,8 +63,13 @@ interface Props {
 }
 
 function Movie({ movie }: Props) {
+	let navigate = useNavigate()
+
 	return (
-		<Box sx={styles.movieBox}>
+		<Box
+			sx={styles.movieBox}
+			onClick={() => navigate(`/movies/${movie.tmdbId}`)}
+		>
 			<img
 				src={`https://image.tmdb.org/t/p/w400/${movie.posterPath}`}
 				alt={movie.title}
