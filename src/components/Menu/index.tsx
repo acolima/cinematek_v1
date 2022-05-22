@@ -14,6 +14,7 @@ import { BookmarkAdd, Favorite } from '@mui/icons-material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import LogoutIcon from '@mui/icons-material/Logout'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
+import ListAltIcon from '@mui/icons-material/ListAlt'
 
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
@@ -21,7 +22,12 @@ import useMenu from '../../hooks/useMenu'
 import styles from './styles'
 import api from '../../services/api'
 
-const options = [
+const menuOptions = [
+	{ icon: <HomeRoundedIcon />, name: 'Movies', path: 'movies' },
+	{ icon: <ListAltIcon />, name: 'Lists', path: 'lists' }
+]
+
+const moviesActions = [
 	{ icon: <Favorite />, name: 'Favorite', path: 'favorite' },
 	{ icon: <CheckCircleIcon />, name: 'Watched', path: 'watched' },
 	{ icon: <BookmarkAdd />, name: 'Watchlist', path: 'watchlist' }
@@ -62,28 +68,31 @@ function MenuBar() {
 					<Divider />
 
 					<List>
-						<ListItem disablePadding onClick={() => navigate('/movies')}>
-							<ListItemButton>
-								<ListItemIcon>
-									<HomeRoundedIcon />
-								</ListItemIcon>
-								<ListItemText primary='Movies' />
-							</ListItemButton>
-						</ListItem>
+						{menuOptions.map((option) => (
+							<ListItem
+								disablePadding
+								onClick={() => navigate(`/${option.path}`)}
+							>
+								<ListItemButton>
+									<ListItemIcon>{option.icon}</ListItemIcon>
+									<ListItemText primary={option.name} />
+								</ListItemButton>
+							</ListItem>
+						))}
 					</List>
 
 					<Divider />
 
 					<List>
-						{options.map((option) => (
+						{moviesActions.map((action) => (
 							<ListItem
-								key={option.name}
+								key={action.name}
 								disablePadding
-								onClick={() => navigate(`/movies/user/${option.path}`)}
+								onClick={() => navigate(`/movies/user/${action.path}`)}
 							>
 								<ListItemButton>
-									<ListItemIcon>{option.icon}</ListItemIcon>
-									<ListItemText primary={option.name} />
+									<ListItemIcon>{action.icon}</ListItemIcon>
+									<ListItemText primary={action.name} />
 								</ListItemButton>
 							</ListItem>
 						))}

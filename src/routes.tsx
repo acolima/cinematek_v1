@@ -1,5 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Main, Movie, Search, SignIn, SignUp, UserPage } from './pages/index'
+import {
+	CreateList,
+	ListPage,
+	Main,
+	Movie,
+	Search,
+	SignIn,
+	SignUp,
+	UserPage
+} from './pages/index'
 
 function PageRoutes() {
 	return (
@@ -11,6 +20,8 @@ function PageRoutes() {
 				<Route path='/movies/:id' element={<Movie />} />
 				<Route path='/movies/user/:category' element={<UserPage />} />
 				<Route path='/search' element={<Search />} />
+				<Route path='/lists' element={<ListPage />} />
+				<Route path='/create-list' element={<CreateList />} />
 			</Routes>
 		</BrowserRouter>
 	)
