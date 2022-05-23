@@ -5,7 +5,7 @@ import styles from './styles'
 function Loader() {
 	return (
 		<Container sx={styles.container}>
-			<TailSpin color='#1976D2' height='90' width='90' />
+			<TailSpin color='#790918' height='90' width='90' />
 		</Container>
 	)
 }

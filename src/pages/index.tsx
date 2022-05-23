@@ -1,10 +1,10 @@
-import CreateList from './CreateList'
-import ListPage from './List'
-import Main from './Main'
-import Movie from './Movie'
-import Search from './Search'
-import SignIn from './SignIn'
-import SignUp from './SignUp'
+import CreateList from './CreateListPage'
+import ListPage from './ListsPage'
+import Main from './MainPage'
+import Movie from './MoviePage'
+import Search from './SearchPage'
+import SignIn from './SignInPage'
+import SignUp from './SignUpPage'
 import UserPage from './UserPage'
 
 export { CreateList, ListPage, Main, Movie, Search, SignIn, SignUp, UserPage }

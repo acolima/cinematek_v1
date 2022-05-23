@@ -34,8 +34,10 @@ const moviesActions = [
 ]
 
 function MenuBar() {
-	const { auth, signOut } = useAuth()
 	const { toggleDrawer, showMenu } = useMenu()
+
+	const { auth, signOut } = useAuth()
+
 	let navigate = useNavigate()
 
 	function handleLogout() {

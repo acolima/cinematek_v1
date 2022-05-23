@@ -25,7 +25,7 @@ interface NewList {
 }
 
 function signUp(body: UserData) {
-	return axios.post(`${BASE_URL}/register`, body)
+	return axios.post(`${BASE_URL}/users/register`, body)
 }
 
 function signIn(body: Omit<UserData, 'pictureUrl'>) {

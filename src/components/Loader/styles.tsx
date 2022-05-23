@@ -1,6 +1,6 @@
 const styles = {
 	container: {
-		height: '60vh',
+		height: '80vh',
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center'
