@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL
+const TMDB_URL = process.env.REACT_APP_API_TMDB_URL
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY
 
 function createConfig(token: string | undefined) {
@@ -39,20 +40,16 @@ function validateToken(token: string | undefined) {
 }
 
 function getTrendingMovies() {
-	return axios.get(
-		`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
-	)
+	return axios.get(`${TMDB_URL}/trending/movie/week?api_key=${API_KEY}`)
 }
 
 function getMovie(movieId: number) {
-	return axios.get(
-		`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`
-	)
+	return axios.get(`${TMDB_URL}/movie/${movieId}?api_key=${API_KEY}`)
 }
 
 function findMoviesByName(name: string) {
 	return axios.get(
-		`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${name}&include_adult=false`
+		`${TMDB_URL}/search/movie?api_key=${API_KEY}&query=${name}&include_adult=false`
 	)
 }
 
@@ -89,8 +86,14 @@ function createList(token: string | undefined, list: NewList) {
 	return axios.post(`${BASE_URL}/users/lists/create`, list, config)
 }
 
+function deleteList(token: string | undefined, listId: number) {
+	const config = createConfig(token)
+	return axios.delete(`${BASE_URL}/users/lists/${listId}/delete`, config)
+}
+
 const api = {
 	createList,
+	deleteList,
 	findMoviesByName,
 	findUserMovie,
 	getLists,

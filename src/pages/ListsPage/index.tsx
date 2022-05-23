@@ -13,6 +13,7 @@ import useAuth from '../../hooks/useAuth'
 
 import api from '../../services/api'
 import styles from './styles'
+import { errorAlert } from '../../utils/toastifyAlerts'
 
 export interface Movie {
 	movies: {
@@ -31,20 +32,27 @@ export interface ListResult {
 function ListPage() {
 	const [lists, setLists] = useState<ListResult[]>([])
 	const [loading, setLoading] = useState(true)
+	const [reloadLists, setReloadLists] = useState(false)
 
-	const { auth } = useAuth()
+	const { auth, signOut } = useAuth()
 	const { showMenu } = useMenu()
 
 	let navigate = useNavigate()
 
 	useEffect(() => {
-		const promise = api.getLists(auth?.token)
-
-		promise.then((response) => {
-			setLists(response.data)
-			setLoading(false)
-		})
-	}, [auth])
+		api
+			.getLists(auth?.token)
+			.then((response) => {
+				setLists(response.data)
+				setLoading(false)
+			})
+			.catch(() => {
+				signOut()
+				errorAlert('Session expired. Please, log in again')
+				navigate('/')
+			})
+		// eslint-disable-next-line
+	}, [auth, reloadLists])
 
 	return (
 		<>
@@ -65,7 +73,14 @@ function ListPage() {
 				{lists?.length === 0 && !loading && <NoLists />}
 
 				{lists.map((list) => (
-					<Lists key={list.id} list={list} />
+					<Lists
+						key={list.id}
+						list={list}
+						reloadLists={reloadLists}
+						setReloadLists={setReloadLists}
+						setLoading={setLoading}
+						setLists={setLists}
+					/>
 				))}
 			</Box>
 		</>

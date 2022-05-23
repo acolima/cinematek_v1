@@ -1,10 +1,9 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 import Header from '../../components/Header'
 import Loader from '../../components/Loader'
 import MenuBar from '../../components/Menu'
 import MoviesList from '../../components/SearchPageComponents/MoviesList'
-import NoResults from '../../components/SearchPageComponents/NoResults'
 import SearchIcon from '../../components/SearchPageComponents/SearchIcon'
 
 import { useState } from 'react'
@@ -71,7 +70,9 @@ function Search() {
 				<Loader />
 			) : (
 				<Box sx={styles.page}>
-					{movies?.length === 0 && <NoResults movieName={movieName} />}
+					{movies?.length === 0 && (
+						<Typography sx={styles.results}>No results found</Typography>
+					)}
 
 					{!movies && <SearchIcon />}
 
@@ -85,6 +86,13 @@ function Search() {
 const styles = {
 	page: {
 		paddingTop: '70px'
+	},
+	results: {
+		paddingBottom: '10px',
+		fontFamily: 'Poppins',
+		fontSize: '16px',
+		width: '90%',
+		margin: '0 auto'
 	}
 }
 
