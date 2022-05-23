@@ -20,12 +20,15 @@ import { MoviesResult } from '../Search'
 import api from '../../services/api'
 import styles from './styles'
 import dayjs from 'dayjs'
+import useAuth from '../../hooks/useAuth'
 
 function CreateList() {
 	const [movieName, setMovieName] = useState('')
+	const [listName, setListName] = useState('')
 	const [movies, setMovies] = useState<MoviesResult[] | null>(null)
 	const [addedMovies, setAddedMovies] = useState<MoviesResult[]>([])
 	const [clearSearch, setClearSearch] = useState(false)
+	const { auth } = useAuth()
 	let navigate = useNavigate()
 
 	useEffect(() => {
@@ -36,14 +39,41 @@ function CreateList() {
 		// eslint-disable-next-line
 	}, [clearSearch])
 
-	function getMovies(name: string) {
+	async function getMovies(name: string) {
 		setMovieName(name)
 
-		const promise = api.findMoviesByName(name)
+		try {
+			const { data } = await api.findMoviesByName(name)
+			setMovies(data.results)
+		} catch (error) {
+			console.log('External API error')
+		}
+	}
 
-		promise.then((response) => {
-			setMovies(response.data.results)
+	async function handleNewList() {
+		if (!listName) {
+			alert("List name can't be empty")
+			return
+		}
+
+		const movies = addedMovies.map((movie) => {
+			return {
+				tmdbId: movie.id,
+				title: movie.title,
+				posterPath: movie.poster_path
+			}
 		})
+
+		try {
+			await api.createList(auth?.token, {
+				name: listName,
+				movies: movies
+			})
+			//alert
+			navigate('/lists')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	function clearInput() {
@@ -52,9 +82,16 @@ function CreateList() {
 	}
 
 	return (
-		<Container sx={{ paddingTop: '30px' }}>
+		<Container sx={{}}>
+			<Typography sx={styles.pageTitle}>New List</Typography>
 			<Box sx={styles.box}>
-				<OutlinedInput placeholder='List name' sx={styles.listNameInput} />
+				<OutlinedInput
+					placeholder='List name'
+					sx={styles.listNameInput}
+					onChange={(e) => setListName(e.target.value)}
+					value={listName}
+					required={true}
+				/>
 
 				<OutlinedInput
 					placeholder='Start typing the movie name'
@@ -95,6 +132,7 @@ function CreateList() {
 						disabled={addedMovies.length === 0}
 						variant='contained'
 						sx={{ backgroundColor: '#0c174b' }}
+						onClick={handleNewList}
 					>
 						Save
 					</Button>
@@ -103,8 +141,6 @@ function CreateList() {
 		</Container>
 	)
 }
-
-export default CreateList
 
 interface SearchResultProps {
 	movie: MoviesResult
@@ -183,3 +219,5 @@ function AddedMovies({ movie }: AddedMoviesProps) {
 		</Box>
 	)
 }
+
+export default CreateList

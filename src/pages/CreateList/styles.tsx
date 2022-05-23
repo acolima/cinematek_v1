@@ -7,7 +7,7 @@ const styles = {
 		flexDirection: 'column',
 		alignItems: 'center',
 		gap: '6px',
-		padding: '5px 0'
+		padding: '8px 0'
 	},
 	listNameInput: {
 		width: '90%',
@@ -17,6 +17,17 @@ const styles = {
 		fontSize: '14px',
 		lineHeight: '24px',
 		color: 'rgba(0, 0, 0, 1)'
+	},
+	pageTitle: {
+		padding: '20px 0 10px 0',
+		fontFamily: 'Poppins',
+		fontWeight: '500',
+		fontSize: '24px',
+		width: '80%',
+		textAlign: 'left',
+		'@media (max-width: 600px)': {
+			fontSize: '18px'
+		}
 	},
 	searchMovieNameInput: {
 		width: '90%',

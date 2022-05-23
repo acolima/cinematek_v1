@@ -18,34 +18,38 @@ import styles from './styles'
 import { useEffect, useState } from 'react'
 
 import Typography from '@mui/material/Typography'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import api from '../../services/api'
+import useAuth from '../../hooks/useAuth'
 
-interface MoviesResult {
-	poster_path: string | undefined
+interface Movie {
+	movies: {
+		tmdbId: number
+		title: string
+		posterPath: string
+	}
+}
+
+interface ListResult {
 	id: number
-	title: string
-	backdrop_path: string | undefined
-	vote_count: number
-	vote_average: number
-	release_date: string
+	name: string
+	listMovies: Movie[]
 }
 
 function ListPage() {
 	const { showMenu } = useMenu()
-	const [movies, setMovies] = useState<MoviesResult[]>([])
+	const [lists, setLists] = useState<ListResult[]>([])
+	const { auth } = useAuth()
 
 	let navigate = useNavigate()
 
 	useEffect(() => {
-		const promise = axios.get(
-			`https://api.themoviedb.org/3/search/movie?api_key=5c04c2f18d200a55005544edf78ffc19&query=batman&include_adult=false`
-		)
+		const promise = api.getLists(auth?.token)
 
 		promise.then((response) => {
-			setMovies(response.data.results)
+			setLists(response.data)
 		})
-	}, [])
+	}, [auth])
 
 	return (
 		<>
@@ -61,63 +65,75 @@ function ListPage() {
 					<AddCircleIcon sx={styles.icons} />
 				</IconButton>
 
-				<Accordion sx={styles.accordion}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-						<img
-							alt='{movies[0].title}'
-							width='80'
-							src={
-								'https://image.tmdb.org/t/p/w400/74xTEgt7R36Fpooo50r9T25onhq.jpg'
-							}
-						/>
-						<Typography
-							sx={{
-								width: '100%',
-								paddingLeft: '10px',
-								display: 'flex',
-								alignItems: 'center'
-							}}
-						>
-							Filmes do Batman
-						</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Grid
-							container
-							sx={{
-								height: '300px',
-								overflowY: 'scroll',
-								'::-webkit-scrollbar': {
-									display: 'none'
-								}
-							}}
-						>
-							{movies?.map((movie) => (
-								<Movies movie={movie} />
-							))}
-						</Grid>
-					</AccordionDetails>
-				</Accordion>
+				{lists.map((list) => (
+					<Lists key={list.id} list={list} />
+				))}
 			</Box>
 		</>
 	)
 }
 
-export default ListPage
-
-interface Props {
-	movie: MoviesResult
+interface ListsProps {
+	list: ListResult
 }
 
-function Movies({ movie }: Props) {
+function Lists({ list }: ListsProps) {
+	const listCover = list.listMovies[0].movies.posterPath
+
+	return (
+		<Accordion sx={styles.accordion}>
+			<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+				<img
+					alt={list.name}
+					width='80'
+					src={`https://image.tmdb.org/t/p/w400${listCover}`}
+				/>
+				<Typography
+					sx={{
+						width: '100%',
+						paddingLeft: '10px',
+						display: 'flex',
+						alignItems: 'center'
+					}}
+				>
+					{list.name}
+				</Typography>
+			</AccordionSummary>
+			<AccordionDetails>
+				<Grid
+					container
+					sx={{
+						height: '300px',
+						overflowY: 'scroll',
+						'::-webkit-scrollbar': {
+							display: 'none'
+						}
+					}}
+				>
+					{list.listMovies?.map((movie) => (
+						<Movies key={movie.movies.tmdbId} movieData={movie} />
+					))}
+				</Grid>
+			</AccordionDetails>
+		</Accordion>
+	)
+}
+
+interface Props {
+	movieData: Movie
+}
+
+function Movies({ movieData }: Props) {
+	const movie = movieData.movies
+	let navigate = useNavigate()
 	return (
 		<Grid item xs={6}>
 			<Box
 				sx={styles.movieBox}
-				//onClick={() => navigate(`/movies/${movie.tmdbId}`)}
+				onClick={() => navigate(`/movies/${movie.tmdbId}`)}
 			>
 				<img
-					src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
+					src={`https://image.tmdb.org/t/p/w400/${movie.posterPath}`}
 					alt={movie.title}
 					style={{
 						width: '80px'
@@ -128,3 +144,5 @@ function Movies({ movie }: Props) {
 		</Grid>
 	)
 }
+
+export default ListPage

@@ -70,6 +70,7 @@ function MenuBar() {
 					<List>
 						{menuOptions.map((option) => (
 							<ListItem
+								key={option.name}
 								disablePadding
 								onClick={() => navigate(`/${option.path}`)}
 							>

@@ -22,7 +22,7 @@ function FavoriteAction({ userMovie, movie }: Props) {
 
 	async function handleFavoriteClick() {
 		await api.updateAction(auth?.token, 'favorite', !favorite, {
-			id: movie.id,
+			tmdbId: movie.id,
 			title: movie!.title,
 			posterPath: movie!.poster_path
 		})

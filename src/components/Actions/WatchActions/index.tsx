@@ -23,7 +23,7 @@ function MovieActions({ userMovie, movie }: Props) {
 	useEffect(() => {}, [watched, watchlist])
 
 	const movieData = {
-		id: movie.id,
+		tmdbId: movie.id,
 		title: movie!.title,
 		posterPath: movie!.poster_path
 	}

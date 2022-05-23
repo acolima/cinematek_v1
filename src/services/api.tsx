@@ -14,9 +14,14 @@ interface UserData {
 }
 
 interface MovieData {
-	id: number
+	tmdbId: number
 	title: string | undefined
 	posterPath: string | undefined
+}
+
+interface NewList {
+	name: string
+	movies: MovieData[]
 }
 
 function signUp(body: UserData) {
@@ -71,16 +76,24 @@ function updateAction(
 ) {
 	const config = createConfig(token)
 
-	return axios.post(
-		`${BASE_URL}/movies/${movieData.id}/${action}/${status}`,
-		{ title: movieData.title, posterPath: movieData.posterPath },
-		config
-	)
+	return axios.post(`${BASE_URL}/movies/${action}/${status}`, movieData, config)
+}
+
+function getLists(token: string | undefined) {
+	const config = createConfig(token)
+	return axios.get(`${BASE_URL}/users/lists`, config)
+}
+
+function createList(token: string | undefined, list: NewList) {
+	const config = createConfig(token)
+	return axios.post(`${BASE_URL}/users/lists/create`, list, config)
 }
 
 const api = {
+	createList,
 	findMoviesByName,
 	findUserMovie,
+	getLists,
 	getMovie,
 	getTrendingMovies,
 	getUserMovies,
