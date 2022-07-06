@@ -1,12 +1,28 @@
 const styles = {
 	page: {
+		width: '60%',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 		gap: '10px',
+		margin: '0 auto',
+		'@media (max-width: 600px)': {
+			margin: '0',
+			width: '100%'
+		}
+	},
+	lists: {
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		gap: '10px',
+		margin: '0 auto',
 		paddingTop: '100px',
 		'@media (max-width: 600px)': {
-			paddingTop: '70px'
+			paddingTop: '70px',
+			margin: '0',
+			width: '100%'
 		}
 	},
 	iconButton: {

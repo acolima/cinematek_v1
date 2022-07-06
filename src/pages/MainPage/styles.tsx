@@ -1,6 +1,7 @@
 const styles = {
 	page: {
 		display: 'flex',
+		width: '100vw',
 		flexDirection: 'column',
 		alignItems: 'center',
 		gap: '20px',

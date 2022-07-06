@@ -1,4 +1,12 @@
 const styles = {
+	page: {
+		width: '60%',
+		margin: '0 auto',
+		'@media (max-width: 600px)': {
+			margin: '0',
+			width: '100%'
+		}
+	},
 	gridContainer: {
 		paddingTop: '100px',
 		'@media (max-width: 600px)': {

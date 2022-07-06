@@ -72,12 +72,12 @@ function ListPage() {
 	}, [auth, reloadLists])
 
 	return (
-		<>
+		<Box sx={styles.page}>
 			<Header page='Lists' />
 
 			{showMenu && <MenuBar />}
 
-			<Box sx={styles.page}>
+			<Box sx={styles.lists}>
 				<IconButton
 					sx={styles.iconButton}
 					onClick={() => navigate('/create-list')}
@@ -101,7 +101,7 @@ function ListPage() {
 					/>
 				))}
 			</Box>
-		</>
+		</Box>
 	)
 }
 

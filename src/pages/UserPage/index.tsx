@@ -48,7 +48,7 @@ function UserPage() {
 	}
 
 	return (
-		<>
+		<Box sx={styles.page}>
 			<Header page={category!} />
 
 			{showMenu && <MenuBar />}
@@ -64,7 +64,7 @@ function UserPage() {
 					</Grid>
 				))}
 			</Grid>
-		</>
+		</Box>
 	)
 }
 

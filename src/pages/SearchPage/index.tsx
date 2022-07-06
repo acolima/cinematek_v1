@@ -57,7 +57,7 @@ function Search() {
 	}
 
 	return (
-		<>
+		<Box sx={styles.page}>
 			<Header
 				page='search'
 				movieName={movieName}
@@ -69,9 +69,9 @@ function Search() {
 			{loading ? (
 				<Loader />
 			) : (
-				<Box sx={styles.page}>
+				<Box sx={styles.results}>
 					{movies?.length === 0 && (
-						<Typography sx={styles.results}>No results found</Typography>
+						<Typography sx={styles.resultsText}>No results found</Typography>
 					)}
 
 					{!movies && <SearchIcon />}
@@ -79,15 +79,23 @@ function Search() {
 					{movies?.length !== 0 && movies && <MoviesList movies={movies} />}
 				</Box>
 			)}
-		</>
+		</Box>
 	)
 }
 
 const styles = {
 	page: {
-		paddingTop: '70px'
+		width: '60%',
+		margin: '0 auto',
+		'@media (max-width: 600px)': {
+			margin: '0',
+			width: '100%'
+		}
 	},
 	results: {
+		paddingTop: '70px'
+	},
+	resultsText: {
 		paddingBottom: '10px',
 		fontFamily: 'Poppins',
 		fontSize: '16px',

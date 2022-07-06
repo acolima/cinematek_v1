@@ -3,15 +3,21 @@ const styles = {
 		position: 'relative',
 		display: 'flex',
 		flexDirection: 'column',
-		boxSizing: 'borderBox'
+		boxSizing: 'borderBox',
+		width: '60%',
+		margin: '0 auto',
+		'@media (max-width: 600px)': {
+			margin: '0',
+			width: '100%'
+		}
 	},
 	movieBackdrop: {
 		opacity: '0.6',
-		width: '100vw',
+		width: '100%',
 		height: '200px'
 	},
 	noBackdrop: {
-		width: '100vw',
+		width: '100%',
 		height: '200px'
 	},
 	moviePoster: {

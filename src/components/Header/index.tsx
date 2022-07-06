@@ -49,7 +49,7 @@ function Header({ page, movieName, setMovieName, handleSearch }: Props) {
 
 	if (page === 'main')
 		return (
-			<Box sx={styles.header}>
+			<Box sx={styles.headerMain}>
 				<Search sx={styles.icons} onClick={() => navigate('/search')} />
 				<Typography sx={styles.logo}>CINEMATEK</Typography>
 				<Menu sx={styles.icons} onClick={toggleDrawer} />

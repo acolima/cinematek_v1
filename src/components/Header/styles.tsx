@@ -3,12 +3,32 @@ const styles = {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'space-around',
-		width: '100%',
-		height: '100px',
+		width: '60%',
+		height: '70px',
+		margin: '0 auto',
 		position: 'fixed',
 		zIndex: 1,
 		background: '#0c174b',
 		'@media (max-width: 600px)': {
+			margin: '0',
+			width: '100%',
+			justifyContent: 'space-between',
+			padding: '10px'
+		}
+	},
+	headerMain: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		width: '100%',
+		height: '100px',
+		margin: '0 auto',
+		position: 'fixed',
+		zIndex: 1,
+		background: '#0c174b',
+		'@media (max-width: 600px)': {
+			margin: '0',
+			width: '100%',
 			height: '70px'
 		}
 	},

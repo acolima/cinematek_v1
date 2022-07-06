@@ -86,7 +86,7 @@ function CreateList() {
 	}
 
 	return (
-		<Container>
+		<Container sx={styles.page}>
 			<Typography sx={styles.pageTitle}>New List</Typography>
 			<Box sx={styles.box}>
 				<OutlinedInput
