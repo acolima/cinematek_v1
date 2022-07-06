@@ -14,6 +14,7 @@ import useAuth from '../../hooks/useAuth'
 import api from '../../services/api'
 import styles from './styles'
 import { errorAlert } from '../../utils/toastifyAlerts'
+import { UserMoviesResult } from '../UserPage'
 
 export interface Movie {
 	movies: {
@@ -31,6 +32,10 @@ export interface ListResult {
 
 function ListPage() {
 	const [lists, setLists] = useState<ListResult[]>([])
+	const [userWatchedMovies, setUserWatchedMovies] = useState<
+		UserMoviesResult[]
+	>([])
+
 	const [loading, setLoading] = useState(true)
 	const [reloadLists, setReloadLists] = useState(false)
 
@@ -51,6 +56,18 @@ function ListPage() {
 				errorAlert('Session expired. Please, log in again')
 				navigate('/')
 			})
+
+		api
+			.getUserMovies(auth?.token, 'watched')
+			.then((response) => {
+				setUserWatchedMovies(response.data)
+			})
+			.catch(() => {
+				signOut()
+				errorAlert('Session expired. Please, log in again')
+				navigate('/')
+			})
+
 		// eslint-disable-next-line
 	}, [auth, reloadLists])
 
@@ -76,6 +93,7 @@ function ListPage() {
 					<Lists
 						key={list.id}
 						list={list}
+						userWatchedMovies={userWatchedMovies}
 						reloadLists={reloadLists}
 						setReloadLists={setReloadLists}
 						setLoading={setLoading}

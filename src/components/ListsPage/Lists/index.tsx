@@ -1,15 +1,14 @@
 import {
-	Accordion,
-	AccordionDetails,
-	AccordionSummary,
+	Box,
 	Button,
+	Collapse,
 	Dialog,
 	DialogActions,
 	DialogTitle,
-	Grid,
 	Typography
 } from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 
 import Movies from '../Movies'
 
@@ -20,9 +19,11 @@ import useAuth from '../../../hooks/useAuth'
 import api from '../../../services/api'
 import { errorAlert } from '../../../utils/toastifyAlerts'
 import { ListResult } from '../../../pages/ListsPage'
+import { UserMoviesResult } from '../../../pages/UserPage'
 
 interface ListsProps {
 	list: ListResult
+	userWatchedMovies: UserMoviesResult[]
 	reloadLists: boolean
 	setReloadLists: React.Dispatch<React.SetStateAction<boolean>>
 	setLists: React.Dispatch<React.SetStateAction<ListResult[]>>
@@ -31,6 +32,7 @@ interface ListsProps {
 
 function Lists({
 	list,
+	userWatchedMovies,
 	reloadLists,
 	setReloadLists,
 	setLists,
@@ -38,6 +40,7 @@ function Lists({
 }: ListsProps) {
 	const listCover = list.listMovies[0].movies.posterPath
 	const [showDialog, setShowDialog] = useState(false)
+	const [open, setOpen] = useState(false)
 	const { auth, signOut } = useAuth()
 
 	let navigate = useNavigate()
@@ -56,23 +59,28 @@ function Lists({
 	}
 
 	return (
-		<Accordion sx={styles.accordion}>
-			<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+		<Box sx={styles.container}>
+			<Box sx={styles.listHeader} onClick={() => setOpen(!open)}>
 				<img
 					alt={list.name}
 					width='80'
 					src={`https://image.tmdb.org/t/p/w400${listCover}`}
 				/>
 				<Typography sx={styles.listName}>{list.name}</Typography>
-			</AccordionSummary>
-			<AccordionDetails>
-				<Grid container sx={styles.listContainer}>
-					{list.listMovies?.map((movie) => (
-						<Movies key={movie.movies.tmdbId} movieData={movie} />
-					))}
-				</Grid>
+				{open ? <ExpandLess /> : <ExpandMore />}
+			</Box>
+
+			<Collapse in={open}>
+				{list.listMovies?.map((movie) => (
+					<Movies
+						key={movie.movies.tmdbId}
+						movieData={movie}
+						userWatchedMovies={userWatchedMovies}
+					/>
+				))}
+
 				<Button sx={styles.deleteButton} onClick={() => setShowDialog(true)}>
-					<Typography sx={styles.deleteButtonText}>Delete list</Typography>
+					Delete list
 				</Button>
 
 				<Dialog open={showDialog}>
@@ -89,37 +97,33 @@ function Lists({
 						</Button>
 					</DialogActions>
 				</Dialog>
-			</AccordionDetails>
-		</Accordion>
+			</Collapse>
+		</Box>
 	)
 }
 
 const styles = {
-	accordion: {
-		width: '90%'
+	container: {
+		width: '90%',
+		backgroundColor: '#fff',
+		display: 'flex',
+		flexDirection: 'column',
+		color: '#282D47',
+		padding: '15px'
+	},
+	listHeader: {
+		display: 'flex',
+		gap: '10px',
+		alignItems: 'center',
+		cursor: 'pointer'
 	},
 	listName: {
-		width: '100%',
-		paddingLeft: '10px',
-		display: 'flex',
-		alignItems: 'center',
+		flex: '1',
 		fontFamily: 'Poppins',
 		fontSize: '18px'
 	},
-	listContainer: {
-		maxHeight: '300px',
-		overflowY: 'scroll',
-		'::-webkit-scrollbar': {
-			display: 'none'
-		}
-	},
 	deleteButton: {
 		width: '100%',
-		display: 'flex',
-		textAlign: 'right'
-	},
-	deleteButtonText: {
-		paddingTop: '10px',
 		fontFamily: 'Poppins',
 		fontSize: '14px'
 	},

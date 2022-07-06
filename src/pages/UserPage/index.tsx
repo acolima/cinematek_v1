@@ -17,7 +17,7 @@ interface MovieObject {
 	posterPath: string
 }
 
-interface UserMoviesResult {
+export interface UserMoviesResult {
 	id: number
 	movies: MovieObject
 }

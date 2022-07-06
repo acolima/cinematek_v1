@@ -1,56 +1,64 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { Movie } from '../../../pages/ListsPage'
 
 import { useNavigate } from 'react-router-dom'
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import { UserMoviesResult } from '../../../pages/UserPage'
+
 interface Props {
 	movieData: Movie
+	userWatchedMovies: UserMoviesResult[]
 }
 
-function Movies({ movieData }: Props) {
+function Movies({ movieData, userWatchedMovies }: Props) {
 	const movie = movieData.movies
+	const watchedMoviesId = userWatchedMovies.map((movie) => movie.movies.tmdbId)
+
 	let navigate = useNavigate()
 
 	return (
-		<Grid item xs={6}>
-			<Box
-				sx={styles.movieBox}
+		<Box sx={styles.container}>
+			<img
+				src={`https://image.tmdb.org/t/p/w400/${movie.posterPath}`}
+				alt={movie.title}
+				style={{ width: '50px' }}
+			/>
+			<Typography
+				sx={styles.movieTitle}
 				onClick={() => navigate(`/movies/${movie.tmdbId}`)}
 			>
-				<img
-					src={`https://image.tmdb.org/t/p/w400/${movie.posterPath}`}
-					alt={movie.title}
-					style={{
-						width: '80px'
-					}}
-				/>
-				<Typography sx={styles.title}>{movie.title}</Typography>
-			</Box>
-		</Grid>
+				{movie.title}
+			</Typography>
+			{watchedMoviesId.find((watchedMovie) => watchedMovie === movie.tmdbId) ? (
+				<CheckCircleIcon />
+			) : (
+				<CheckCircleOutlineIcon />
+			)}
+		</Box>
 	)
 }
 
 const styles = {
-	movieBox: {
+	container: {
 		boxSizing: 'border-box',
-		width: '90%',
-		height: '200px',
 		margin: '0 auto',
-		padding: '10px 0',
+		padding: '10px',
 		display: 'flex',
-		flexDirection: 'column',
+		gap: '10px',
 		alignItems: 'center',
+		justifyContent: 'space-between',
 		border: '1px solid #282D47',
-		marginBottom: '25px',
-		borderRadius: '20px',
-		cursor: 'pointer'
+		marginTop: '15px',
+		borderRadius: '5px'
 	},
-	title: {
+	movieTitle: {
 		fontFamily: 'Poppins',
 		textAlign: 'center',
-		paddingTop: '5px',
-		overflow: 'hidden',
-		wordBreak: 'break-word'
+		fontSize: '13px',
+		flex: 1,
+		cursor: 'pointer'
 	}
 }
 
