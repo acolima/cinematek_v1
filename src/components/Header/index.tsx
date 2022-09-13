@@ -25,6 +25,14 @@ function Header({ page, movieName, setMovieName, handleSearch }: Props) {
 
 	let navigate = useNavigate()
 
+	function handleInputKeyDown(
+		e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>
+	) {
+		if (e.key === 'Enter' && handleSearch) {
+			handleSearch()!
+		}
+	}
+
 	if (page === 'search') {
 		return (
 			<Box sx={styles.header}>
@@ -34,6 +42,7 @@ function Header({ page, movieName, setMovieName, handleSearch }: Props) {
 					placeholder='Search for movies'
 					value={movieName}
 					onChange={(e) => setMovieName!(e.target.value)}
+					onKeyDown={(e) => handleInputKeyDown(e)}
 					endAdornment={
 						<InputAdornment position='end'>
 							<IconButton onClick={handleSearch} edge='end'>
